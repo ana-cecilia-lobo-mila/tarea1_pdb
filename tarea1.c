@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 char alfabeto[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m', 'n','o','p','q','r','s','t','u','v','w','x','y','z'};
 char *morse[] = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
@@ -51,15 +52,32 @@ void funcion1(){
     printf("Ingrese el texto de entrada a continuación: \n");
     getchar();
     fgets(texto, 100, stdin);
+
+    texto[strcspn(texto, "\n")] = '\0';
+
     char *texto_convertido[100];
+    char especiales[100][2];
 
     for(int i = 0; texto[i] != '\0'; i++){
-        for(int j = 0; j < 26 ; j++){
-            if(alfabeto[j] == texto[i]){
-                texto_convertido[i] = morse[j];
-                break;
-            }
 
+        if(texto[i] == ' '){
+            texto_convertido[i] = "/";
+            continue;
+
+        }
+
+        if(texto[i] >= 'a' && texto[i] <= 'z'){
+            for(int j = 0; j < 26 ; j++){
+                if(alfabeto[j] == texto[i]){
+                    texto_convertido[i] = morse[j];
+                    break;
+                }
+            } 
+        }else{
+            especiales[i][0] = texto[i];
+            especiales[i][1] = '\0';
+
+            texto_convertido[i] = especiales[i];
         }
     }
 
