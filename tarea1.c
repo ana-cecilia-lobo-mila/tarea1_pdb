@@ -185,6 +185,69 @@ void funcion3(){
 }
 
 void funcion4(){
-    printf("Funcion 4\n");
-    //main();
+    char texto[100];
+    char cambio[100];
+
+    printf("Texto a diccionario de reemplazo seleccionado \n");
+    printf("Ingrese el texto de entrada a continuación: \n");
+
+    getchar();
+    fgets(texto, 100, stdin);
+
+    printf("Ingrese el diccionario de caracteres a reemplazar \n");
+    printf("FORMATO: ENTRADA:SALIDA \n");
+    printf("Sin repetir caracteres \n");
+
+    
+    fgets(cambio, 100, stdin);
+
+    char diccionario_entrada[100];
+    char diccionario_salida[100];
+
+    int i = 0;
+
+    while(cambio[i] != ':'){
+        diccionario_entrada[i] = cambio[i];
+        i++;
+    }
+    diccionario_entrada[i] = '\0';
+    i++;
+    int j = 0;
+
+    while(cambio[i] != '\0' && cambio[i] != '\n'){
+        diccionario_salida[j] = cambio[i];
+        i++;
+        j++;
+    }
+    diccionario_salida[j] = '\0';
+    
+    char texto_convertido[100];
+    int y = 0;
+    for(int k = 0; texto[k] != '\0'; k++){
+        int encontrado = 0;
+
+        for(int x = 0; x < strlen(diccionario_entrada); x++){
+            if(texto[k] == diccionario_entrada[x]){
+                texto_convertido[y] = diccionario_salida[x];
+                y++;
+                encontrado = 1;
+                break;
+            }
+        }
+        if(!encontrado){
+            texto_convertido[y] = texto[k];
+            y++;
+        }
+    }
+    texto_convertido[y] = '\0';
+
+    printf("El texto %s cifrado mediante el diccionario proporcionado es: ", texto);
+    printf("%s \n", texto_convertido);
 }
+
+//gcc tarea1.c -o 
+//.... --- .-.. .- / .- -. .- !!!
+//an:hl
+
+//Hola, ¿Cómo estás?
+//Coleá?:Wad4R.
