@@ -2,9 +2,9 @@
 #include <string.h>
 
 char alfabeto[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m', 'n','o','p','q','r','s','t','u','v','w','x','y','z'};
-char *morse[] = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+char alfabetoMayus[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M','N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+char morse[][5] = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
 
-void leer_texto();
 void funcion1();
 void funcion2();
 void funcion3();
@@ -37,12 +37,9 @@ int menu(int valor){
         funcion4();
     } else{
         printf("Número no válido\n");
+        //main()
     }
     return valor;
-}
-
-void leer_texto(){
-
 }
 
 
@@ -55,21 +52,27 @@ void funcion1(){
 
     texto[strcspn(texto, "\n")] = '\0';
 
-    char *texto_convertido[100];
+    char texto_convertido[100][5];
     char especiales[100][2];
 
     for(int i = 0; texto[i] != '\0'; i++){
 
         if(texto[i] == ' '){
-            texto_convertido[i] = "/";
+            strcpy(texto_convertido[i], "/");
             continue;
-
         }
 
         if(texto[i] >= 'a' && texto[i] <= 'z'){
             for(int j = 0; j < 26 ; j++){
                 if(alfabeto[j] == texto[i]){
-                    texto_convertido[i] = morse[j];
+                    strcpy(texto_convertido[i], morse[j]);
+                    break;
+                }
+            } 
+        }else if(texto[i] >= 'A' && texto[i] <= 'Z'){
+            for(int j = 0; j < 26 ; j++){
+                if(alfabetoMayus[j] == texto[i]){
+                    strcpy(texto_convertido[i], morse[j]);
                     break;
                 }
             } 
@@ -77,20 +80,73 @@ void funcion1(){
             especiales[i][0] = texto[i];
             especiales[i][1] = '\0';
 
-            texto_convertido[i] = especiales[i];
+            strcpy(texto_convertido[i], especiales[i]);
         }
     }
 
     printf("El texto %s en código morse es: ", texto);
-    for(int i = 0; texto_convertido[i] != NULL; i++){
+    for(int i = 0; texto[i] != '\0'; i++){
         printf("%s ", texto_convertido[i]);
     }
-    //main();
+    printf("\n");
+    main();
     
 }
 
 void funcion2(){
-    printf("Funcion 2\n");
+    char texto[100];
+    printf("Código morse a texto seleccionado. \n");
+    printf("Ingrese el texto de entrada a continuación: \n");
+    getchar();
+    fgets(texto, 100, stdin);
+
+    texto[strcspn(texto, "\n")] = '\0';
+
+    char texto_convertido[100];
+
+    int i = 0;
+    int x = 0;
+    int y = 0;
+    while(texto[x] != '\0'){
+        char letra[100];
+        int k = 0;
+
+        if(texto[x] == '/'){
+            texto_convertido[y] = ' ';
+            y++;
+            x++;
+        }else if(texto[x] == ' '){
+            x++; 
+        }else if(texto[x] != '.' && texto[x] != '-'){
+            texto_convertido[y] = texto[x];
+            y++;
+            x++;
+        }else{
+            for(i = x; texto[i] != ' '; i++){
+                letra[k] = texto[i];
+                k++;
+            }
+            letra[k] = '\0';
+            
+
+            for(int j = 0; j < 26 ; j++){
+                if(strcmp(morse[j], letra) == 0){
+                    texto_convertido[y] = alfabeto[j];
+                    y++;
+                    break;
+                }
+            }
+            x = i + 1;
+        }   
+    }
+
+    texto_convertido[y] = '\0';
+
+    printf("El código morse %s en texto ASCII es: ", texto);
+    for(int i = 0; texto_convertido[i] != '\0'; i++){
+        printf("%c", texto_convertido[i]);
+    }
+    printf("\n");
     main();
 }
 
@@ -125,10 +181,10 @@ void funcion3(){
     printf("El texto %s desplazado por %d letras es: ", texto, desplazo);
     printf("%s", resultado);
 
-    //main();
+    main();
 }
 
 void funcion4(){
     printf("Funcion 4\n");
-    main();
+    //main();
 }
