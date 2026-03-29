@@ -232,6 +232,11 @@ void funcion4(){
                 y++;
                 encontrado = 1;
                 break;
+            }else if(texto[k] == diccionario_salida[x]){
+                texto_convertido[y] = diccionario_entrada[x];
+                y++;
+                encontrado = 1;
+                break;
             }
         }
         if(!encontrado){
