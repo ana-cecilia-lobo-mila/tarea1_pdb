@@ -44,18 +44,53 @@ int menu(int valor){
 
 
 void funcion1(){
-    char texto[100];
+    char nombre_archivo[100];
+    char texto[1000];
+
     printf("Texto a código morse seleccionado. \n");
-    printf("Ingrese el texto de entrada a continuación: \n");
+    printf("Ingrese el nombre del archivo de entrada que contiene el mensaje: \n");
     getchar();
-    fgets(texto, 100, stdin);
+    fgets(nombre_archivo, 100, stdin);
 
-    texto[strcspn(texto, "\n")] = '\0';
+    // eliminar salto de línea
+    for(int i = 0; nombre_archivo[i] != '\0'; i++){
+        if(nombre_archivo[i] == '\n'){
+            nombre_archivo[i] = '\0';
+            break;
+        }
+    }
 
-    char texto_convertido[100][5];
-    char especiales[100][2];
+    FILE *archivo = fopen(nombre_archivo, "r");
+
+    if(archivo == NULL){
+        printf("El archivo no existe\n");
+        printf("Ingrese el texto de entrada a continuación: \n");
+        getchar();
+        fgets(texto, 1000, stdin);
+
+        texto[strcspn(texto, "\n")] = '\0';
+    }else{
+        // leer contenido
+        int i = 0;
+        while(fgets(texto + i, 1000 - i, archivo) != NULL){
+            while(texto[i] != '\0'){
+                i++;
+            }
+        }
+
+        fclose(archivo);
+
+    }
+
+    char texto_convertido[1000][5];
+    char especiales[1000][2];
 
     for(int i = 0; texto[i] != '\0'; i++){
+
+        if(texto[i] == '\n'){
+            strcpy(texto_convertido[i], " "); 
+            continue;
+        }
 
         if(texto[i] == ' '){
             strcpy(texto_convertido[i], "/");
@@ -94,15 +129,43 @@ void funcion1(){
 }
 
 void funcion2(){
-    char texto[100];
+    char nombre_archivo[100];
+    char texto[1000];
+
     printf("Código morse a texto seleccionado. \n");
-    printf("Ingrese el texto de entrada a continuación: \n");
+    printf("Ingrese el nombre del archivo de entrada que contiene el mensaje: \n");
     getchar();
-    fgets(texto, 100, stdin);
+    fgets(nombre_archivo, 100, stdin);
 
-    texto[strcspn(texto, "\n")] = '\0';
+    // eliminar salto de línea
+    for(int i = 0; nombre_archivo[i] != '\0'; i++){
+        if(nombre_archivo[i] == '\n'){
+            nombre_archivo[i] = '\0';
+            break;
+        }
+    }
 
-    char texto_convertido[100];
+    FILE *archivo = fopen(nombre_archivo, "r");
+
+    if(archivo == NULL){
+        printf("El archivo no existe\n");
+        printf("Ingrese el texto de entrada a continuación: \n");
+        getchar();
+        fgets(texto, 1000, stdin);
+
+        texto[strcspn(texto, "\n")] = '\0';
+    }else{
+        // leer contenido
+        int i = 0;
+        while(fgets(texto + i, 1000 - i, archivo) != NULL){
+            while(texto[i] != '\0'){
+                i++;
+            }
+        }
+        fclose(archivo);
+    }
+
+    char texto_convertido[1000];
 
     int i = 0;
     int x = 0;
@@ -256,3 +319,5 @@ void funcion4(){
 
 //Hola, ¿Cómo estás?
 //Coleá?:Wad4R.
+
+//../archivo.txt
