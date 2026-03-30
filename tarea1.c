@@ -77,9 +77,7 @@ void funcion1(){
                 i++;
             }
         }
-
         fclose(archivo);
-
     }
 
     char texto_convertido[1000][5];
@@ -214,17 +212,49 @@ void funcion2(){
 }
 
 void funcion3(){
-    char texto[100];
-    int desplazo;
+
+    char nombre_archivo[100];
+    char texto[1000];
 
     printf("Texto a texto desplazado seleccionado.\n");
-    printf("Ingrese el texto de entrada a continuación: \n");
+    printf("Ingrese el nombre del archivo de entrada que contiene el mensaje: \n");
     getchar();
-    fgets(texto, 100, stdin);
+    fgets(nombre_archivo, 100, stdin);
+
+    // eliminar salto de línea
+    for(int i = 0; nombre_archivo[i] != '\0'; i++){
+        if(nombre_archivo[i] == '\n'){
+            nombre_archivo[i] = '\0';
+            break;
+        }
+    }
+
+    FILE *archivo = fopen(nombre_archivo, "r");
+
+    if(archivo == NULL){
+        printf("El archivo no existe\n");
+        printf("Ingrese el texto de entrada a continuación: \n");
+        getchar();
+        fgets(texto, 1000, stdin);
+
+        texto[strcspn(texto, "\n")] = '\0';
+    }else{
+        // leer contenido
+        int i = 0;
+        while(fgets(texto + i, 1000 - i, archivo) != NULL){
+            while(texto[i] != '\0'){
+                i++;
+            }
+        }
+
+        fclose(archivo);
+
+    }
+
+    int desplazo;
+
     printf("Ingrese el número de letras a desplazar: \n");
     scanf("%d", &desplazo);
-
-    printf("%s", texto);
 
     char resultado[100];
     int i; 
@@ -248,14 +278,44 @@ void funcion3(){
 }
 
 void funcion4(){
-    char texto[100];
-    char cambio[100];
+    char nombre_archivo[100];
+    char texto[1000];
 
     printf("Texto a diccionario de reemplazo seleccionado \n");
-    printf("Ingrese el texto de entrada a continuación: \n");
-
+    printf("Ingrese el nombre del archivo de entrada que contiene el mensaje: \n");
     getchar();
-    fgets(texto, 100, stdin);
+    fgets(nombre_archivo, 100, stdin);
+
+    // eliminar salto de línea
+    for(int i = 0; nombre_archivo[i] != '\0'; i++){
+        if(nombre_archivo[i] == '\n'){
+            nombre_archivo[i] = '\0';
+            break;
+        }
+    }
+
+    FILE *archivo = fopen(nombre_archivo, "r");
+
+    if(archivo == NULL){
+        printf("El archivo no existe\n");
+        printf("Ingrese el texto de entrada a continuación: \n");
+        getchar();
+        fgets(texto, 1000, stdin);
+
+        texto[strcspn(texto, "\n")] = '\0';
+    }else{
+        // leer contenido
+        int i = 0;
+        while(fgets(texto + i, 1000 - i, archivo) != NULL){
+            while(texto[i] != '\0'){
+                i++;
+            }
+        }
+
+        fclose(archivo);
+
+    }
+    char cambio[100];
 
     printf("Ingrese el diccionario de caracteres a reemplazar \n");
     printf("FORMATO: ENTRADA:SALIDA \n");
