@@ -20,7 +20,7 @@ int main(){
     printf("Bienvenido. Seleccione un método de conversión\n");
     printf("1) Texto a código morse.\n");
     printf("2) Código morse a texto.\n");
-    printf("3) Texto desplazado.\n");
+    printf("3) Texto a texto desplazado.\n");
     printf("4) Diccionario de reemplazo.\n");
 
     fgets(buffer, 10, stdin);
@@ -227,7 +227,7 @@ void funcion2(){
         } else if(texto[x] != '.' && texto[x] != '-'){
             texto_convertido[y++] = texto[x++];
         } else {
-            for(i = x; texto[i] != ' '; i++){
+            for(i = x; texto[i] != ' ' && texto[i] != '\0'; i++){
                 letra[k++] = texto[i];
             }
             letra[k] = '\0';
